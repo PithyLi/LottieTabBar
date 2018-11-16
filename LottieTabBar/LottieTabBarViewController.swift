@@ -15,7 +15,7 @@ protocol LottieTabBarDelegate: class {
     func lottieTabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem, selectIndex: Int)
 }
 
-class LottieTabBarViewController: UITabBarController {
+public class LottieTabBarViewController: UITabBarController {
 
     weak var lottieDelegate: LottieTabBarDelegate?
 
@@ -27,13 +27,13 @@ class LottieTabBarViewController: UITabBarController {
 
     var lastSelectIndex: Int = 0
 
-    override var selectedIndex: Int {
+    override public var selectedIndex: Int {
         didSet {
             self.tabBar.withOutAnimationLottieImage(index: selectedIndex)
         }
     }
 
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
 
         delegate = self
@@ -51,13 +51,13 @@ class LottieTabBarViewController: UITabBarController {
 }
 
 extension LottieTabBarViewController: UITabBarControllerDelegate {
-    
-    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+
+    public func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         lottieDelegate?.lottieTabBar(tabBarController, shouldSelect: viewController)
         return true
     }
 
-    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+    override public func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         if let items = self.tabBar.items, items.contains(item) {
             let array = items as NSArray
             let index = array.index(of: item)
