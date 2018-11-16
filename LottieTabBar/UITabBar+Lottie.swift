@@ -17,6 +17,7 @@ extension UITabBar {
 
     static var lastTag: Int = 0
 
+    // json动画
     func addLottieImage(index: Int, lottieName: String) {
         if Thread.isMainThread {
             self.addLottieImageInMainThread(index: index, lottieName: lottieName)
@@ -27,6 +28,7 @@ extension UITabBar {
         }
     }
 
+    // 红点
     func addRedPointView(index: Int) {
         if Thread.isMainThread {
             self.addRedPointViewInMainThread(index: index)
@@ -37,6 +39,7 @@ extension UITabBar {
         }
     }
 
+    // 消息数红点
     func addRedPointLabel(index: Int) {
         if Thread.isMainThread {
             self.addRedPointLabelInMainThread(index: index)
@@ -93,6 +96,7 @@ extension UITabBar {
         self.addSubview(redLabel)
     }
 
+    // 设置红点状态
     func setRedPointViewStatus(index: Int, isHidden: Bool) {
         let redView = self.viewWithTag(2000 + index)
         if let redLabel = self.viewWithTag(3000 + index) as? UILabel {
@@ -101,6 +105,7 @@ extension UITabBar {
         redView?.isHidden = isHidden
     }
 
+    // 设置消息数红点状态
     func setRedPointLabelStatus(index: Int, isHidden: Bool, count: Int) {
         if let redLabel = self.viewWithTag(3000 + index) as? UILabel {
             redLabel.isHidden = isHidden
@@ -114,17 +119,18 @@ extension UITabBar {
         }
     }
 
+    // 点击动画
     func animationLottieImage(index: Int) {
         stopAnimationAllLottieView()
         if let lottieView = self.viewWithTag(1000 + index) as? LOTAnimationView {
             lottieView.animationProgress = 0.0
-//            lottieView.play()
             lottieView.play { _ in
                 UITabBar.lastTag = 1000 + index
             }
         }
     }
 
+    // 无动画选中
     func withOutAnimationLottieImage(index: Int) {
         guard let items = items, index < items.count else { return }
         stopAnimationAllLottieView()
@@ -133,6 +139,7 @@ extension UITabBar {
         }
     }
 
+    // 停止其他动画
     func stopAnimationAllLottieView() {
         guard let items = self.items else { return }
         var i = 0
