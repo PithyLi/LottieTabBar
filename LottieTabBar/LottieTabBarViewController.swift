@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol LottieTabBarDelegate: class {
+public protocol LottieTabBarDelegate: class {
 
     func lottieTabBar(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController)
 
