@@ -19,7 +19,7 @@ open class LottieTabBarViewController: UITabBarController {
 
     weak var lottieDelegate: LottieTabBarDelegate?
 
-    var tabbars: [UIViewController] = [] {
+    public var tabbars: [UIViewController] = [] {
         didSet {
             self.viewControllers = tabbars
         }
