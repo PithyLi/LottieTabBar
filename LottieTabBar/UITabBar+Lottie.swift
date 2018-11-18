@@ -68,7 +68,7 @@ extension UITabBar {
     }
 
     // 设置红点状态
-    func setBadgeStatus(index: Int, isHidden: Bool, count: Int = 0) {
+    public func setBadgeStatus(index: Int, isHidden: Bool, count: Int = 0) {
         let redView = self.viewWithTag(2000 + index)
         if isHidden {
             redView?.isHidden = true
