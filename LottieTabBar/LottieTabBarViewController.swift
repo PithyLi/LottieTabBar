@@ -17,7 +17,7 @@ public protocol LottieTabBarDelegate: class {
 
 open class LottieTabBarViewController: UITabBarController {
 
-    weak var lottieDelegate: LottieTabBarDelegate?
+    public weak var lottieDelegate: LottieTabBarDelegate?
 
     public var tabbars: [UIViewController] = [] {
         didSet {
