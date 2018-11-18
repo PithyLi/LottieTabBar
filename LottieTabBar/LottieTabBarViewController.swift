@@ -41,11 +41,17 @@ open class LottieTabBarViewController: UITabBarController {
         // Do any additional setup after loading the view.
     }
 
-    public func addTabLottieView(jsons: [String]) {
+    public func addTabLottieView(jsons: [String], titles: [String]? = nil) {
         for index in 0..<tabbars.count {
+            guard index < jsons.count else { return }
             self.tabBar.addLottieImage(index: index, lottieName: jsons[index])
             self.tabBar.addRedPointView(index: index)
-            self.tabBar.addRedPointLabel(index: index)
+            if let titles = titles, index < titles.count {
+                self.tabBar.items?[index].title = titles[index]
+            } else {
+                self.tabBar.items?[index].title = ""
+                self.tabBar.items?[index].titlePositionAdjustment = UIOffset(horizontal: 15.0, vertical: 0.0)
+            }
         }
     }
 }

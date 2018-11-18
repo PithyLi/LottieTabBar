@@ -8,8 +8,8 @@
 import UIKit
 import Lottie
 
-let LOTAnimationViewWidth: CGFloat = 40.0
-let LOTAnimationViewHeight: CGFloat = 40.0
+let LOTAnimationViewWidth: CGFloat = 35.0
+let LOTAnimationViewHeight: CGFloat = 35.0
 let RedPointViewWidthAndHeight: CGFloat = 8.0
 let RedPointLabelWidthAndHeight: CGFloat = 16.0
 
@@ -35,17 +35,6 @@ extension UITabBar {
         } else {
             DispatchQueue.main.async {
                 self.addRedPointViewInMainThread(index: index)
-            }
-        }
-    }
-
-    // 消息数红点
-    func addRedPointLabel(index: Int) {
-        if Thread.isMainThread {
-            self.addRedPointLabelInMainThread(index: index)
-        } else {
-            DispatchQueue.main.async {
-                self.addRedPointLabelInMainThread(index: index)
             }
         }
     }
@@ -78,44 +67,21 @@ extension UITabBar {
         self.addSubview(redView)
     }
 
-    private func addRedPointLabelInMainThread(index: Int) {
-        let redLabel = UILabel()
-        let totalW = UIScreen.main.bounds.size.width
-        let singleW = totalW / CGFloat(self.items?.count ?? 1)
-        let x = ceil(CGFloat(index) * singleW + singleW / 2.0 + LOTAnimationViewWidth / 2.0 - 5.0)
-        let y:CGFloat = 3.0
-        redLabel.frame = CGRect(x: x, y: y, width: RedPointLabelWidthAndHeight, height: RedPointLabelWidthAndHeight)
-        redLabel.backgroundColor = UIColor.red
-        redLabel.layer.masksToBounds = true
-        redLabel.layer.cornerRadius = RedPointLabelWidthAndHeight / 2.0
-        redLabel.tag = 3000 + index;
-        redLabel.textColor = UIColor.white
-        redLabel.textAlignment = .center
-        redLabel.font = UIFont.systemFont(ofSize: 10.0)
-        redLabel.isHidden = true
-        self.addSubview(redLabel)
-    }
-
     // 设置红点状态
-    func setRedPointViewStatus(index: Int, isHidden: Bool) {
+    func setBadgeStatus(index: Int, isHidden: Bool, count: Int = 0) {
         let redView = self.viewWithTag(2000 + index)
-        if let redLabel = self.viewWithTag(3000 + index) as? UILabel {
-            redLabel.isHidden = true
-        }
-        redView?.isHidden = isHidden
-    }
-
-    // 设置消息数红点状态
-    func setRedPointLabelStatus(index: Int, isHidden: Bool, count: Int) {
-        if let redLabel = self.viewWithTag(3000 + index) as? UILabel {
-            redLabel.isHidden = isHidden
-            let text = count <= 99 ? "\(count)" : "\(99)+"
-            redLabel.text = text
-            redLabel.sizeToFit()
-            let width = redLabel.frame.size.width + 6.0 > RedPointLabelWidthAndHeight ? redLabel.frame.size.width + 6.0 : RedPointLabelWidthAndHeight
-            redLabel.frame = CGRect(x: redLabel.frame.origin.x, y: redLabel.frame.origin.y, width: width, height: RedPointLabelWidthAndHeight)
-            let redView = self.viewWithTag(2000 + index)
+        if isHidden {
             redView?.isHidden = true
+            self.items?[index].badgeValue = nil
+        } else {
+            if count > 0 {
+                let badgeText = count <= 99 ? "\(count)" : "\(99)+"
+                redView?.isHidden = true
+                self.items?[index].badgeValue = isHidden == false ? badgeText : nil
+            } else {
+                redView?.isHidden = false
+                self.items?[index].badgeValue = nil
+            }
         }
     }
 
